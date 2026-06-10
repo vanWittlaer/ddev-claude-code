@@ -38,12 +38,11 @@ health_checks() {
   health_checks
 }
 
-# Enable this once the add-on is published to GitHub with a tagged release.
-# @test "install from release and verify CLI is present" {
-#   set -eu -o pipefail
-#   cd "${TESTDIR}"
-#   echo "# ddev add-on get vanWittlaer/ddev-claude-code with project ${PROJNAME} in $(pwd)" >&3
-#   ddev add-on get vanWittlaer/ddev-claude-code
-#   ddev restart >/dev/null
-#   health_checks
-# }
+@test "install from release and verify CLI is present" {
+  set -eu -o pipefail
+  cd "${TESTDIR}"
+  echo "# ddev add-on get vanWittlaer/ddev-claude-code with project ${PROJNAME} in $(pwd)" >&3
+  ddev add-on get vanWittlaer/ddev-claude-code
+  ddev restart >/dev/null
+  health_checks
+}
