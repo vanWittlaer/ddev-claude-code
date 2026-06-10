@@ -1,0 +1,8 @@
+#!/bin/bash
+#ddev-generated
+
+## Description: Claude Code
+## Usage: claude
+## Example: ddev claude [...]
+
+claude "$@"

@@ -1,0 +1,5 @@
+# Keep dev/CI artifacts out of the `ddev add-on get` release tarball.
+/tests export-ignore
+/.github export-ignore
+/.gitattributes export-ignore
+/.editorconfig export-ignore

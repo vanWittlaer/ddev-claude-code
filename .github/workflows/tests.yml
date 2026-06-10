@@ -1,0 +1,36 @@
+name: tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  schedule:
+    - cron: '01 06 * * 01'  # 06:01 every Monday
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  tests:
+    name: test-${{ matrix.ddev_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ddev_version: [ "stable" ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ddev
+        run: |
+          curl -fsSL https://ddev.com/install.sh | bash -s ${{ matrix.ddev_version == 'stable' && '' || matrix.ddev_version }}
+          ddev version
+
+      - name: Install bats
+        run: |
+          git clone --depth 1 https://github.com/bats-core/bats-core /tmp/bats-core
+          sudo /tmp/bats-core/install.sh /usr/local
+
+      - name: Run tests
+        run: bats ./tests/test.bats

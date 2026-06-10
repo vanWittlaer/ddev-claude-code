@@ -1,0 +1,36 @@
+# ddev-claude-code add-on
+# Details about install.yaml: https://docs.ddev.com/en/stable/users/extend/additional-services/#sections-and-features-of-ddev-get-add-on-installyaml
+
+name: claude-code
+
+# Requires a reasonably recent DDEV. Adjust downward if you need to support older binaries.
+ddev_version_constraint: '>= v1.24.0'
+
+# Files copied into the project's .ddev/ directory and committed to the repo,
+# so teammates share the `ddev claude` command and a consistent CLI baseline.
+# Each file carries a #ddev-generated marker so `ddev add-on remove` can clean
+# it up and a later `ddev add-on get` can replace it if unmodified.
+project_files:
+  - web-build/Dockerfile.claude
+  - commands/web/claude
+  - config.claude.yaml
+
+# This add-on adds no global files and no service.
+global_files: []
+
+# No service container and no other add-ons required.
+dependencies: []
+
+# post_install_actions run in the context of the project's .ddev directory.
+post_install_actions:
+  - chmod +x ${DDEV_APPROOT}/.ddev/commands/web/claude
+  - |
+    #ddev-description:Remind the user to rebuild the web image
+    echo ""
+    echo "claude-code installed."
+    echo "Run 'ddev restart' to bake the Claude Code CLI into the web image,"
+    echo "then launch it inside the container with 'ddev claude'."
+
+# Files in project_files are removed automatically on `ddev add-on remove`
+# (they contain #ddev-generated), so no explicit removal_actions are needed.
+removal_actions: []
