@@ -13,18 +13,15 @@ defaults:
 
 jobs:
   tests:
-    name: test-${{ matrix.ddev_version }}
+    name: test
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        ddev_version: [ "stable" ]
     steps:
       - uses: actions/checkout@v4
 
       - name: Install ddev
         run: |
-          curl -fsSL https://ddev.com/install.sh | bash -s ${{ matrix.ddev_version == 'stable' && '' || matrix.ddev_version }}
+          # No version arg installs the latest stable release.
+          curl -fsSL https://ddev.com/install.sh | bash
           ddev version
 
       - name: Install bats
