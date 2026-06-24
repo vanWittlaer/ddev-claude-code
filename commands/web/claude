@@ -5,4 +5,4 @@
 ## Usage: claude
 ## Example: ddev claude [...]
 
-claude "$@"
+cd $DDEV_APPROOT && claude "$@"
